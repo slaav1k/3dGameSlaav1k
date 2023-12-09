@@ -10,6 +10,9 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Space Gladiators");
+		config.setWindowedMode((int) Core.VIRTUAL_WIDTH, (int) Core.VIRTUAL_HEIGHT);
 		new Lwjgl3Application(new Core(), config);
 	}
+
+
 }
