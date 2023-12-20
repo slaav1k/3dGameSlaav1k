@@ -1,16 +1,23 @@
 package screens;
 
+import UI.GameUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.deeep.spaceglad.Core;
+import com.deeep.spaceglad.GameWorld;
+import com.deeep.spaceglad.Settings;
 
 public class GameScreen implements Screen {
     Core game;
     GameWorld gameWorld;
+    GameUI gameUI;
 
     public GameScreen(Core game) {
         this.game = game;
-        gameWorld = new GameWorld();
+        gameUI = new GameUI(game);
+        gameWorld = new GameWorld(gameUI);
+        Settings.Paused = false;
+        Gdx.input.setInputProcessor(gameUI.stage);
         Gdx.input.setCursorCatched(true);
     }
     @Override
@@ -20,11 +27,16 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        /** Updates */
+        gameUI.update(delta);
+        /** Draw */
         gameWorld.render(delta);
+        gameUI.render();
     }
 
     @Override
     public void resize(int width, int height) {
+        gameUI.resize(width, height);
         gameWorld.resize(width, height);
     }
 
@@ -46,5 +58,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         gameWorld.dispose();
+        gameUI.dispose();
     }
 }

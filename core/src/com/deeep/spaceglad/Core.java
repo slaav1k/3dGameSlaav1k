@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import screens.GameScreen;
+import screens.MainMenuScreen;
 
 public class Core extends ApplicationAdapter {
 	public static final float VIRTUAL_WIDTH = 960;
@@ -15,8 +16,18 @@ public class Core extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		new Assets();
 		Gdx.input.setCatchKey(BACK_KEY_CODE, true);
-		setScreen(new GameScreen(this));
+		//setScreen(new GameScreen(this));
+		new Settings().load();
+		setScreen(new MainMenuScreen(this));
+
+	}
+
+	@Override
+	public void dispose() {
+		Settings.save();
+		Assets.dispose();
 	}
 
 	@Override

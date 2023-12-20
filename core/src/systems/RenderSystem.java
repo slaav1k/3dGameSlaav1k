@@ -18,8 +18,7 @@ public class RenderSystem extends EntitySystem {
         this.environment = environment;
     }
     public void addedToEngine(Engine e) {
-        entities =
-                e.getEntitiesFor(Family.all(ModelComponent.class).get());
+        entities = e.getEntitiesFor(Family.all(ModelComponent.class).get());
     }
     public void update(float delta) {
         for (int i = 0; i < entities.size(); i++) {
