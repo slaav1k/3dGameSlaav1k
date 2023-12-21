@@ -10,6 +10,5 @@ public class BulletComponent implements Component {
     public btRigidBody.btRigidBodyConstructionInfo bodyInfo;
     public btCollisionObject body;
 
-    public BulletComponent() {
-    }
+
 }

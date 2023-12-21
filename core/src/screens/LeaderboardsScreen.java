@@ -12,7 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.deeep.spaceglad.Assets;
 import com.deeep.spaceglad.Core;
+import com.deeep.spaceglad.FilesCore;
 import com.deeep.spaceglad.Settings;
+
+import static com.deeep.spaceglad.FilesCore.readScoresFromFile;
 
 public class LeaderboardsScreen implements Screen {
     Core game;
@@ -20,6 +23,7 @@ public class LeaderboardsScreen implements Screen {
     Image backgroundImage;
     TextButton backButton;
     Label label[];
+    String scores[];
     public LeaderboardsScreen(Core game) {
         this.game = game;
         stage = new Stage(new FitViewport(Core.VIRTUAL_WIDTH, Core.VIRTUAL_HEIGHT));
@@ -31,9 +35,10 @@ public class LeaderboardsScreen implements Screen {
     private void setWidgets() {
         backgroundImage = new Image(new Texture(Gdx.files.internal("data/backgroundMN.png")));
         backButton = new TextButton("Back", Assets.skin);
+        scores = FilesCore.readScoresFromFile();
         label = new Label[5];
         for (int i = 0; i < label.length; i++)
-            label[i] = new Label(i + 1 + ")" + Settings.highscores[i], Assets.skin);
+            label[i] = new Label(i + 1 + ")" + scores[i], Assets.skin);
     }
     private void configureWidgers() {
         backgroundImage.setSize(Core.VIRTUAL_WIDTH, Core.VIRTUAL_HEIGHT);
@@ -97,5 +102,3 @@ public class LeaderboardsScreen implements Screen {
     }
     // empty methods from Screen
 }
-
-

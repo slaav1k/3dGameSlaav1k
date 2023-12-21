@@ -9,8 +9,8 @@ import com.deeep.spaceglad.Settings;
 
 public class GameScreen implements Screen {
     Core game;
-    GameWorld gameWorld;
     GameUI gameUI;
+    GameWorld gameWorld;
 
     public GameScreen(Core game) {
         this.game = game;
@@ -20,16 +20,14 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(gameUI.stage);
         Gdx.input.setCursorCatched(true);
     }
+
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        /** Updates */
         gameUI.update(delta);
-        /** Draw */
         gameWorld.render(delta);
         gameUI.render();
     }
@@ -41,23 +39,20 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() {
+    public void dispose() {
+        gameWorld.dispose();
+        gameUI.dispose();
+    }
 
+    @Override
+    public void pause() {
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        gameWorld.dispose();
-        gameUI.dispose();
     }
 }
