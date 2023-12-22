@@ -2,20 +2,19 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.deeep.spaceglad.Assets;
-import com.deeep.spaceglad.Core;
-import com.deeep.spaceglad.FilesCore;
-import com.deeep.spaceglad.Settings;
+import com.deeep.spaceglad.*;
 
-import static com.deeep.spaceglad.FilesCore.readScoresFromFile;
 
 public class LeaderboardsScreen implements Screen {
     Core game;
@@ -31,6 +30,11 @@ public class LeaderboardsScreen implements Screen {
         configureWidgers();
         setListeners();
         Gdx.input.setInputProcessor(stage);
+        if (Sounds.isMenuMusicPaused) {
+            Sounds.menuSound.resume();
+            Sounds.isMenuMusicPaused = false;
+        }
+
     }
     private void setWidgets() {
         backgroundImage = new Image(new Texture(Gdx.files.internal("data/backgroundMN.png")));
@@ -42,8 +46,12 @@ public class LeaderboardsScreen implements Screen {
     }
     private void configureWidgers() {
         backgroundImage.setSize(Core.VIRTUAL_WIDTH, Core.VIRTUAL_HEIGHT);
+        backgroundImage.setColor(1, 1, 1, 0);
+        backgroundImage.addAction(Actions.fadeIn(0.65f));
         backButton.setSize(128, 64);
         backButton.setPosition(Core.VIRTUAL_WIDTH - backButton.getWidth() - 5,5);
+        backButton.setColor(1, 1, 1, 0);
+        backButton.addAction(new SequenceAction(Actions.delay(0.65f), Actions.fadeIn(0.75f)));
         stage.addActor(backgroundImage);
         stage.addActor(backButton);
         int y = 0;
@@ -51,6 +59,8 @@ public class LeaderboardsScreen implements Screen {
             label[i].setFontScale(3);
             label[i].setPosition(15, Core.VIRTUAL_HEIGHT - label[i].getHeight() - 25 - y);
             y += 96;
+            label[i].setColor(1, 1, 1, 0);
+            label[i].addAction(new SequenceAction(Actions.delay(0.65f), Actions.fadeIn(0.75f)));
             stage.addActor(label[i]);
         }
     }

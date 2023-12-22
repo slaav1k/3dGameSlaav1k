@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
+import com.deeep.spaceglad.Sounds;
 import components.*;
 
 public class BulletSystem extends EntitySystem implements EntityListener {
@@ -26,13 +27,19 @@ public class BulletSystem extends EntitySystem implements EntityListener {
                 Entity entity0 = (Entity) colObj0.userData;
                 Entity entity1 = (Entity) colObj1.userData;
                 if (entity0.getComponent(CharacterComponent.class) != null && entity1.getComponent(CharacterComponent.class) != null) {
+
                     if (entity0.getComponent(EnemyComponent.class) != null) {
-                        if (entity0.getComponent(StatusComponent.class).alive)
-                            entity1.getComponent(PlayerComponent.class).health -= 10;
+                        if (entity0.getComponent(StatusComponent.class).alive) {
+                            entity1.getComponent(PlayerComponent.class).health -= 34;
+                            Sounds.minusHPSound.play();
+                        }
                         entity0.getComponent(StatusComponent.class).alive = false;
+                        Sounds.minusHPSound.play();
                     } else {
-                        if (entity1.getComponent(StatusComponent.class).alive)
-                            entity0.getComponent(PlayerComponent.class).health -= 10;
+                        if (entity1.getComponent(StatusComponent.class).alive) {
+                            entity0.getComponent(PlayerComponent.class).health -= 34;
+                            Sounds.minusHPSound.play();
+                        }
                         entity1.getComponent(StatusComponent.class).alive = false;
                     }
                 }

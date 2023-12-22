@@ -1,12 +1,19 @@
 package managers;
 
+import UI.PauseWidget;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.deeep.spaceglad.Assets;
+import com.deeep.spaceglad.Core;
 
 public class ControllerWidget {
     private static Touchpad movementPad;
@@ -14,7 +21,9 @@ public class ControllerWidget {
     private static Vector2 movementVector;
     private static Vector2 watchVector;
 
+
     public ControllerWidget() {
+
         Touchpad.TouchpadStyle touchpadStyle = new Touchpad.TouchpadStyle();
         touchpadStyle.knob = new TextureRegionDrawable(new TextureRegion
                 (new Texture(Gdx.files.internal("data/touchKnob.png"))));
@@ -33,6 +42,8 @@ public class ControllerWidget {
 
         movementVector = new Vector2(0, 0);
         watchVector = new Vector2(0, 0);
+
+
     }
 
     public void addToStage(Stage stage) {

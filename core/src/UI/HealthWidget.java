@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.Align;
 import com.deeep.spaceglad.Assets;
 import com.deeep.spaceglad.Settings;
+import com.deeep.spaceglad.Sounds;
 
 
 public class HealthWidget extends Actor {

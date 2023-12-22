@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.deeep.spaceglad.Assets;
-import com.deeep.spaceglad.Core;
-import com.deeep.spaceglad.FilesCore;
-import com.deeep.spaceglad.Settings;
+import com.deeep.spaceglad.*;
 import components.PlayerComponent;
 import screens.GameScreen;
 import screens.LeaderboardsScreen;
@@ -50,6 +47,10 @@ public class GameOverWidget extends Actor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new LeaderboardsScreen(game));
+                if (!Sounds.isMusicPaused) {
+                    Sounds.musicGameSound.pause();
+                    Sounds.isMusicPaused = true;
+                }
             }
         });
         quitB.addListener(new ClickListener() {
@@ -60,9 +61,12 @@ public class GameOverWidget extends Actor {
         });
         quitMenuB.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent inputEvent, float x,
-                                float y) {
+            public void clicked(InputEvent inputEvent, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
+                if (!Sounds.isMusicPaused) {
+                    Sounds.musicGameSound.pause();
+                    Sounds.isMusicPaused = true;
+                }
             }
         });
     }

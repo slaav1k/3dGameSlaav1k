@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.deeep.spaceglad.Assets;
 import com.deeep.spaceglad.Core;
 import com.deeep.spaceglad.Settings;
+import com.deeep.spaceglad.Sounds;
 import screens.GameScreen;
 import screens.MainMenuScreen;
 
@@ -72,6 +73,10 @@ public class PauseWidget extends Actor {
             @Override
             public void clicked(InputEvent inputEvent, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
+                if (!Sounds.isMusicPaused) {
+                    Sounds.musicGameSound.pause();
+                    Sounds.isMusicPaused = true;
+                }
             }
         });
         quitButton.addListener(new ClickListener() {

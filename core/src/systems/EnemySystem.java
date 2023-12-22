@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.deeep.spaceglad.GameWorld;
+import com.deeep.spaceglad.Sounds;
 import components.*;
 import managers.EntityFactory;
 
@@ -94,6 +95,10 @@ public class EnemySystem extends EntitySystem implements EntityListener {
 
     private void spawnEnemy(int randomSpawnIndex) {
         engine.addEntity(EntityFactory.createEnemy(gameWorld.bulletSystem, xSpawns[randomSpawnIndex], 33, zSpawns[randomSpawnIndex]));
+        if (Sounds.isMonsterMusicPaused) {
+            Sounds.monsterSound.resume();
+            Sounds.isMonsterMusicPaused = false;
+        }
     }
 
     @Override

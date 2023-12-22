@@ -23,6 +23,8 @@ public class FilesCore {
 
     public static String[] readScoresFromFile() {
         String[] scores = new String[MAX_SCORES];
+        Arrays.fill(scores, "0");
+
 
         FileHandle fileHandle = Gdx.files.local(FILE_NAME);
         if (!fileHandle.exists()) {

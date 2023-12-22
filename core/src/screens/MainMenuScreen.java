@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.deeep.spaceglad.Assets;
 import com.deeep.spaceglad.Core;
+import com.deeep.spaceglad.Sounds;
 
 
 public class MainMenuScreen implements Screen {
@@ -27,8 +28,12 @@ public class MainMenuScreen implements Screen {
         setWidgets();
         configureWidgers();
         setListeners();
-
         Gdx.input.setInputProcessor(stage);
+        Sounds.loadSounds();
+        if (Sounds.isMenuMusicPaused) {
+            Sounds.menuSound.resume();
+            Sounds.isMenuMusicPaused = false;
+        }
     }
 
     private void setWidgets() {
@@ -72,6 +77,10 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new GameScreen(game));
+                if (!Sounds.isMenuMusicPaused) {
+                    Sounds.menuSound.pause();
+                    Sounds.isMenuMusicPaused = true;
+                }
             }
         });
         leaderboardsButton.addListener(new ClickListener() {

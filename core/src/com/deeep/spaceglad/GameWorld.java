@@ -25,6 +25,7 @@ public class GameWorld {
         setDebug();
         addSystems(gameUI);
         addEntities();
+
     }
 
     private void setDebug() {
@@ -107,6 +108,7 @@ public class GameWorld {
         character.getComponent(CharacterComponent.class).characterController.dispose();
         character.getComponent(CharacterComponent.class).ghostObject.dispose();
         character.getComponent(CharacterComponent.class).ghostShape.dispose();
+
 //        EntityFactory.dispose();
     }
 

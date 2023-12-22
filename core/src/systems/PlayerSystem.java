@@ -17,8 +17,12 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.deeep.spaceglad.GameWorld;
 import com.deeep.spaceglad.Settings;
 import UI.GameUI;
+import com.deeep.spaceglad.Sounds;
 import components.*;
 import managers.ControllerWidget;
+
+import static com.deeep.spaceglad.Sounds.musicGameSound;
+import static com.deeep.spaceglad.Sounds.spaceSound;
 
 
 public class PlayerSystem extends EntitySystem implements EntityListener, InputProcessor {
@@ -39,24 +43,9 @@ public class PlayerSystem extends EntitySystem implements EntityListener, InputP
     private Vector3 translation = new Vector3();
     private Matrix4 ghost = new Matrix4();
 
-    static AssetManager assetManager = new AssetManager();
-    static Sound gunshotSound;
-    static Sound jumpSound;
-    static Sound spaceSound;
-    static Sound musicGameSound;
 
-    public static void loadSounds() {
-        assetManager.load("sounds/jump.mp3", Sound.class);
-        assetManager.load("sounds/gunshot.mp3", Sound.class);
-        assetManager.load("sounds/space.mp3", Sound.class);
-        assetManager.load("sounds/musicGame.mp3", Sound.class);
-        assetManager.finishLoading();
-        jumpSound = assetManager.get("sounds/jump.mp3", Sound.class);
-        gunshotSound = assetManager.get("sounds/gunshot.mp3", Sound.class);
-        spaceSound = assetManager.get("sounds/space.mp3", Sound.class);
-        musicGameSound = assetManager.get("sounds/musicGame.mp3", Sound.class);
 
-    }
+
 
 
     public PlayerSystem(GameWorld gameWorld, GameUI gameUI, Camera camera) {
@@ -64,10 +53,6 @@ public class PlayerSystem extends EntitySystem implements EntityListener, InputP
         this.gameWorld = gameWorld;
         this.gameUI = gameUI;
         rayTestCB = new ClosestRayResultCallback(Vector3.Zero, Vector3.Z);
-        PlayerSystem.loadSounds();
-        spaceSound.play();
-        long musicGameSoundId = musicGameSound.play();
-        musicGameSound.setLooping(musicGameSoundId, true);
     }
 
     @Override
@@ -131,19 +116,21 @@ public class PlayerSystem extends EntitySystem implements EntityListener, InputP
             characterComponent.characterController.setJumpSpeed(25);
             //characterComponent.characterController.jump();
             characterComponent.characterController.jump(new Vector3(0,25,0));
-            jumpSound.play();
+            Sounds.jumpSound.play();
 
         }
         if (Gdx.input.justTouched()) fire();
     }
 
     private void updateStatus() {
+
         gameUI.healthWidget.setValue(playerComponent.health);
+
     }
 
     private void fire() {
         Ray ray = camera.getPickRay(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        gunshotSound.play();
+        Sounds.gunshotSound.play();
         rayFrom.set(ray.origin);
         rayTo.set(ray.direction).scl(50f).add(rayFrom);
         rayTestCB.setCollisionObject(null);
@@ -156,6 +143,11 @@ public class PlayerSystem extends EntitySystem implements EntityListener, InputP
             if (((Entity) obj.userData).getComponent(EnemyComponent.class) != null) {
                 if(((Entity) obj.userData).getComponent(StatusComponent.class).alive) {
                     ((Entity) obj.userData).getComponent(StatusComponent.class).setAlive(false);
+                    if (!Sounds.isMonsterMusicPaused) {
+                        Sounds.monsterSound.pause();
+                        Sounds.isMonsterMusicPaused = true;
+                    }
+                    Sounds.monsterDeathSound.play();
                     PlayerComponent.score += 100;
 
                 }
@@ -168,6 +160,11 @@ public class PlayerSystem extends EntitySystem implements EntityListener, InputP
         if (playerComponent.health <= 0 && !Settings.Paused) {
             Settings.Paused = true;
             gameUI.gameOverWidget.gameOver();
+            if (!Sounds.isMonsterMusicPaused) {
+                Sounds.monsterSound.pause();
+                Sounds.isMonsterMusicPaused = true;
+            }
+
         }
     }
 

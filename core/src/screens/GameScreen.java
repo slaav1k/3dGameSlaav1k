@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.deeep.spaceglad.Core;
 import com.deeep.spaceglad.GameWorld;
 import com.deeep.spaceglad.Settings;
+import com.deeep.spaceglad.Sounds;
 
 public class GameScreen implements Screen {
     Core game;
@@ -19,6 +20,13 @@ public class GameScreen implements Screen {
         Settings.Paused = false;
         Gdx.input.setInputProcessor(gameUI.stage);
         Gdx.input.setCursorCatched(true);
+
+        if (Sounds.isMusicPaused) {
+            Sounds.musicGameSound.resume();
+            Sounds.isMusicPaused = false;
+        }
+
+
     }
 
     @Override
@@ -42,6 +50,7 @@ public class GameScreen implements Screen {
     public void dispose() {
         gameWorld.dispose();
         gameUI.dispose();
+
     }
 
     @Override
