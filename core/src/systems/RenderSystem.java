@@ -59,7 +59,6 @@ public class RenderSystem extends EntitySystem {
 
 
     public void addedToEngine(Engine e) {
-        // Grabs all entities with desired components
         entities = e.getEntitiesFor(Family.all(ModelComponent.class).get());
     }
 
@@ -80,7 +79,7 @@ public class RenderSystem extends EntitySystem {
                 ModelComponent mod = entities.get(x).getComponent(ModelComponent.class);
                 if (isVisible(perspectiveCamera, mod.instance)) batch.render(mod.instance);
             }
-            if (entities.get(x).getComponent(AnimationComponent.class) != null & Settings.Paused == false)
+            if (entities.get(x).getComponent(AnimationComponent.class) != null & !Settings.Paused)
                 entities.get(x).getComponent(AnimationComponent.class).update(delta);
         }
         batch.end();

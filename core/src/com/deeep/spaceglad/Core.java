@@ -4,7 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import screens.MainMenuScreen;
+import screens.LoadScreen;
 
 public class Core extends ApplicationAdapter {
 	public static final float VIRTUAL_WIDTH = 960;
@@ -16,7 +16,7 @@ public class Core extends ApplicationAdapter {
 		new Assets();
 		new Settings().load();
 		Gdx.input.setCatchBackKey(true);
-		setScreen(new MainMenuScreen(this));
+		setScreen(new LoadScreen(this));
 	}
 
 	@Override

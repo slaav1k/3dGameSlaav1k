@@ -75,7 +75,6 @@ public class EnemySystem extends EntitySystem implements EntityListener {
 
             float theta = (float) (Math.atan2(dX, dZ));
 
-            //Calculate the transforms
             Quaternion rot = quat.setFromAxis(0, 1, 0, (float) Math.toDegrees(theta) + 90);
 
             cm.get(e).characterDirection.set(-1, 0, 0).rot(mod.instance.transform);
